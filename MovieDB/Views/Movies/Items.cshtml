@@ -8,24 +8,29 @@
     <table class="table table-striped table-bordered">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <h5 class="text">Id</h5>
             </th>
             <th>
+                <h5 class="text">Name</h5>
+            </th>
+          
+            <th>
                 <h5 class="text">Options</h5>
-
-
-            <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.movieId)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                     @Html.HiddenFor(modelItem => item.ischecked)
                 </td>
+                
                 <td>
-                    <button type="button" class="btn btn-success" value="Delete" onclick="location.href='@Url.Action("Details","Movies", new {id=item.Id, name=item.Name})'" >Details</button>
+                    <button type="button" class="btn btn-success" value="Delete" onclick="location.href='@Url.Action("Details","Movies", new {name=item.Name, movieId=item.movieId})'" >Details</button>
                     <button type="button" class="btn btn-danger" value="Delete" onclick="location.href='@Url.Action("Delete","Movies", new {id=item.Id, name=item.Name})'" >Delete</button>
                     
                 </td>

@@ -24,6 +24,7 @@
                         @Html.CheckBoxFor(model => model.Movies[i].ischecked)
                         @Html.HiddenFor(model => model.Movies[i].Name)
                         @Html.HiddenFor(model => model.Movies[i].Id)
+                        @Html.HiddenFor(model => model.Movies[i].movieId)
                         <label class="form-check-label text-danger">Select</label>
                     </td>
                 </tr>

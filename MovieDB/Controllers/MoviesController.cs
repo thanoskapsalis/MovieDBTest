@@ -93,7 +93,7 @@ namespace MovieDB.Controllers
                     AddtoDB(model.Movies[i]);
 
 
-            return new EmptyResult ();
+            return  RedirectToAction("Items","Movies");
         }
 
 
@@ -108,14 +108,15 @@ namespace MovieDB.Controllers
         {
             using (var db=new MovieContext ())
             {
-                db.MovieTable.Add(movie);
+                Movie mv = new Movie(){Id = movie.Id, Name = movie.Name, ischecked = movie.ischecked, movieId = movie.movieId};
+                db.MovieTable.Add(mv);
                 db.SaveChanges();
             }
         }
 
-        public ActionResult Details(int? id, string Name)
+        public ActionResult Details(string name, int movieId)
         {
-            var search_link="https://www.themoviedb.org/movie/" + id + "-" + Name + "?language=el-GR";
+            var search_link="https://www.themoviedb.org/movie/" + movieId + "-" + name + "?language=el-GR";
             return Redirect(search_link);
         }
 

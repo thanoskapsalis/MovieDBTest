@@ -17,11 +17,13 @@ namespace MovieDB.Models
 
         public bool ischecked { get; set; }
 
+        public int movieId { get; set; }
+
        // public virtual ICollection<Enrollment> Enrollments { get; set; }
-        public Movie(int Id,string Name)
+        public Movie(int movieId,string Name)
         {
             this.Name=Name;
-            this.Id=Id;
+            this.movieId=movieId;
             ischecked=false;
         }
 
