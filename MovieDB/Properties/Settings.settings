@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MovieDB.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="API_KEY" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">api_key=c490c953da8162f1bb70b04aadea5906</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

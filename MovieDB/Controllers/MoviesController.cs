@@ -24,6 +24,7 @@ namespace MovieDB.Controllers
 
         public ActionResult TestFunction(string MovieName)
         {
+            res.Clear ();;
             try
             {
                 var tosearch=MovieName.Split('\n').ToArray ();
@@ -46,7 +47,7 @@ namespace MovieDB.Controllers
             var searchMovies=new List<Movie> ();
             try
             {
-                var apiKey="api_key=c490c953da8162f1bb70b04aadea5906";
+                var apiKey= MovieDB.Properties.Settings.Default.API_KEY;
                 var apiRequest=
                     WebRequest.Create("https://api.themoviedb.org/3/search/movie?" + apiKey + "&query=" + searchtext) as
                         HttpWebRequest;
@@ -116,7 +117,7 @@ namespace MovieDB.Controllers
 
         public ActionResult Details(string name, int movieId)
         {
-            var search_link="https://www.themoviedb.org/movie/" + movieId + "-" + name + "?language=el-GR";
+            var search_link="https://www.themoviedb.org/movie/" + movieId + "-" + name;
             return Redirect(search_link);
         }
 

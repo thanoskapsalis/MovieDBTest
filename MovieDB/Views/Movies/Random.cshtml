@@ -3,29 +3,64 @@
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <body>
 
-    
+
 <div class="container">
     <div class="row">
         <div class=" container float-left">
             <h1>Insert your Movies</h1>
         </div>
     </div>
-    <div class="alert alert-warning">
-        <strong>Warning!</strong> Indicates a warning that might need attention.
+    <div id="error" class="alert alert-warning">
+        <strong id="errormessage">Warning!</strong>You must write at least one movie to continue.
     </div>
     <div class="form-group">
-        <form method="post" class="form-group" action="@Url.Action("TestFunction", "Movies")">
-            <label class="control-label col-sm-2" >Movie List:</label>
+        <form method="post" class="form-group" onsubmit="return SubmitCheck()" action="@Url.Action("TestFunction", "Movies")" >
+            <label class="control-label col-sm-2">Movie List:</label>
             <div>
-                <textarea class="form-control" rows="5" cols="90" id="result" name="MovieName"></textarea><br />
-                <button type="submit" for="search" class="btn btn-danger btn-block">Search</button>
+                <textarea id="theTextArea" class="form-control" rows="5" cols="90" id="result" name="MovieName"></textarea><br />
+                <button type="submit" id="submit" for="search" class="btn btn-danger btn-block" onclick="SubmitCheck()">Search</button>
+
             </div>
         </form>
+
+        <a class="btn btn-danger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How does this Work?</a>
+        <br /><br /><div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                You just have to write one by one a movie title and press the Search Button.
+                <strong>Attention!</strong>Every Line MUST have one movie.<br />If you want to add a second movie type in on the next line.
+            </div>
+        </div>
+
     </div>
 </div>
+
+
 </body>
+
+<script>
+    jQuery(document).ready(function () {
+        $("#error").hide();
+    });
+
+</script>
+
+
+<script>
+    function SubmitCheck() {
+        if ($("#theTextArea").val().trim().length < 1) {
+            $("#error").show();
+            return false;
+        } else {
+            return true;
+        }
+       
+    }
+</script>
+
+
+
+
 
 
