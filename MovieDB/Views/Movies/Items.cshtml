@@ -20,8 +20,11 @@
             </th>
           
             <th>
-            <h5 class="text">Options</h5>
+               
+            </th>
+            <th></th>
         </tr>
+
 
         @foreach (var item in Model)
         {
@@ -35,13 +38,12 @@
                 </td>
                 
                 <td>
-                    <form method="post" onsubmit="return !Mconfirm()" onclick="location.href = '@Url.Action("Delete", "Movies", new {id=item.Id, name=item.Name})'">
+                    <form method="post" onsubmit="return Mconfirm()" action="@Url.Action("Delete", "Movies", new {id=item.Id, name=item.Name})'">
                         <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
                     </form>
+                <td>
                     <button type="button" class="btn btn-success" value="Delete" onclick="location.href = '@Url.Action("Details", "Movies", new {name=item.Name, movieId=item.movieId})'">Details</button>
-
-
-                </td>
+                    </td>
             </tr>
         }
 

@@ -41,6 +41,20 @@ namespace MovieDB.Controllers
             return RedirectToAction("Result", "Movies", res);
         }
 
+        [HttpPost]
+        public JsonResult ajaxcall (string id)
+        {
+           
+            res.Clear(); ;
+            var tosearch = id.Split('\n').ToArray();
+            for (var i = 0; i < tosearch.Length; i++)
+                foreach (var item in CallAPI(tosearch[i]))
+                    res.Add(item);
+            var movie = new MovieModel { Movies = res };
+            movie.Movies = res;
+            return Json(res,JsonRequestBehavior.AllowGet);
+        }
+
 
         public List<Movie> CallAPI(string searchtext)
         {

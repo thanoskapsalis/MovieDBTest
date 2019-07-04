@@ -24,11 +24,11 @@
 
                     <td>
                         <h3 class="text text-body">@Model.Movies[i].Name</h3>
-                        @Html.CheckBoxFor(model => model.Movies[i].ischecked)
+                        @Html.CheckBoxFor(model => model.Movies[i].ischecked, new {@id="select"})
                         @Html.HiddenFor(model => model.Movies[i].Name)
                         @Html.HiddenFor(model => model.Movies[i].Id)
                         @Html.HiddenFor(model => model.Movies[i].movieId)
-                        <label class="form-check-label text-danger">Select</label>
+                        <label class="form-check-label text-danger" for="select">Select</label>
                     </td>
                 </tr>
             }
@@ -52,6 +52,8 @@
         }
       
     </script>
+
+
 
 
 }

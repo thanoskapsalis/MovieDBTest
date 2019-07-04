@@ -1,4 +1,4 @@
-﻿
+﻿@model MovieDB.Models.MovieModel
 @{
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +16,7 @@
         <strong id="errormessage">Warning!</strong>You must write at least one movie to continue.
     </div>
     <div class="form-group">
-        <form method="post" class="form-group" onsubmit="return SubmitCheck()" action="@Url.Action("TestFunction", "Movies")" >
+        <form method="post" class="form-group" onsubmit="return SubmitCheck()" action="@Url.Action("TestFunction", "Movies")">
             <label class="control-label col-sm-2">Movie List:</label>
             <div>
                 <textarea id="theTextArea" class="form-control" rows="5" cols="90" id="result" name="MovieName"></textarea><br />
@@ -24,6 +24,8 @@
 
             </div>
         </form>
+        <button type="button" onclick="LoadData();" id="ajax" class="btn btn-danger btn-block">AjaxMode</button> <br />
+
 
         <a class="btn btn-danger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How does this Work?</a>
         <br /><br /><div class="collapse" id="collapseExample">
@@ -37,7 +39,25 @@
 </div>
 
 
+<div id="ajaxResutls" class="container">
+    <div id="error" class="alert alert-warning">
+        <strong id="errormessage">Unfortunetly!</strong>Any movie match your searches.
+    </div>
+    <table id="tblStudent" class="table table-bordered table-striped table-responsive table-hover">  
+        <thead>  
+        <tr>  
+            <th align="left" class="productth">ID</th>  
+            <th align="left" class="productth">Student Name</th>  
+            <th align="left" class="productth">Student Address</th>  
+        </tr>  
+        </thead>  
+        <tbody></tbody>  
+    </table>  
+    <button type="submit" id="submit" value="" class="btn btn-danger">Add Selected Items to Wishlist</button>
+
+</div>
 </body>
+
 
 <script>
     jQuery(document).ready(function () {
@@ -55,10 +75,41 @@
         } else {
             return true;
         }
-       
+
     }
 </script>
 
+<script>
+    function LoadData() {
+        var value = 
+        $("#tblStudent tbody tr").remove();  
+        $.ajax({  
+            type: 'POST',  
+            url: '@Url.Action("ajaxcall","Movies")',  
+            dataType: 'json',  
+            data: {id: $("#theTextArea").val() },  
+            success: function (data) {  
+                var items = '';  
+                $.each(data, function (i, item) {  
+                    var rows = "<tr>"  
+                        + "<td class='prtoducttd'>" + item.Name + "</td>"  
+                        + "<td class='prtoducttd'>" + item.Id + "</td>"  
+                        + "<td class='prtoducttd'>" + item.checkid + "</td>"  
+                        + "</tr>";  
+                    $('#tblStudent tbody').append(rows);  
+                });  
+            },  
+            error: function (ex) {  
+                var r = jQuery.parseJSON(response.responseText);  
+                alert("Message: " + r.Message);  
+                alert("StackTrace: " + r.StackTrace);  
+                alert("ExceptionType: " + r.ExceptionType);  
+            }  
+        });  
+        return false;  
+        
+    }
+</script>
 
 
 
