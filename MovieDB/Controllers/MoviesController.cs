@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using MovieDB.Classes;
 using MovieDB.Models;
@@ -145,6 +146,17 @@ namespace MovieDB.Controllers
             }
 
             return RedirectToAction("Items");
+        }
+
+        public JsonResult sumbitToDB(List<Movie> Movie)
+        {
+            for (int i=0; i < Movie.Count; i++)
+            {
+                Movie mv = new Movie() { Id = i, ischecked = true, movieId = Movie[i].movieId, Name = Movie[i].Name };
+                AddtoDB(mv);
+            }
+
+            return Json(Movie);
         }
     }
 }

@@ -3,7 +3,7 @@
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body>
+<body >
 
 
 <div class="container">
@@ -20,11 +20,11 @@
             <label class="control-label col-sm-2">Movie List:</label>
             <div>
                 <textarea id="theTextArea" class="form-control" rows="5" cols="90" id="result" name="MovieName"></textarea><br />
-                <button type="submit" id="submit" for="search" class="btn btn-danger btn-block" onclick="SubmitCheck()">Search</button>
+                <!--   <button type="submit" id="submit" for="search" class="btn btn-danger btn-block" onclick="SubmitCheck()">Search</button> -->
 
             </div>
         </form>
-        <button type="button" onclick="LoadData();" id="ajax" class="btn btn-danger btn-block">AjaxMode</button> <br />
+      <button type="button" onclick="LoadData();" id="ajax" class="btn btn-danger btn-block">Search</button> <br />
 
 
         <a class="btn btn-danger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How does this Work?</a>
@@ -40,20 +40,24 @@
 
 
 <div id="ajaxResutls" class="container">
-    <div id="error" class="alert alert-warning">
+    <div id="error2" class="alert alert-warning">
         <strong id="errormessage">Unfortunetly!</strong>Any movie match your searches.
     </div>
-    <table id="tblStudent" class="table table-bordered table-striped table-responsive table-hover">  
-        <thead>  
-        <tr>  
-            <th align="left" class="productth">ID</th>  
-            <th align="left" class="productth">Student Name</th>  
-            <th align="left" class="productth">Student Address</th>  
-        </tr>  
-        </thead>  
-        <tbody></tbody>  
-    </table>  
-    <button type="submit" id="submit" value="" class="btn btn-danger">Add Selected Items to Wishlist</button>
+    <div id="success" class="alert alert-success" role="alert">
+        <strong>Congrats!</strong> Movies Stored
+    </div>
+    <table id="tblStudent" class="table table-bordered table-striped table-responsive table-hover">
+        <thead>
+            <tr>
+                <th align="left">id</th>
+                <th align="left">Movie Name</th>
+                <th align="left"></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button type="submit2" id="submit" onclick="ajaxadd()" class="btn btn-danger">Add Selected Items to Wishlist</button><br /><br />
+
 
 </div>
 </body>
@@ -62,6 +66,9 @@
 <script>
     jQuery(document).ready(function () {
         $("#error").hide();
+        $("#error2").hide();
+        $("#tblStudent").hide();
+        $("#success").hide();
     });
 
 </script>
@@ -70,8 +77,8 @@
 <script>
     function SubmitCheck() {
         if ($("#theTextArea").val().trim().length < 1) {
-            $("#error").show();
-            return false;
+            $("#error").show(200);
+            return  false;
         } else {
             return true;
         }
@@ -81,22 +88,33 @@
 
 <script>
     function LoadData() {
+        if (SubmitCheck())
+            $("#error").hide(200);
+        $("#error2").hide(200);
+        $("#success").hide(200);
         var value = 
-        $("#tblStudent tbody tr").remove();  
+            $("#tblStudent tbody tr").remove();  
         $.ajax({  
             type: 'POST',  
             url: '@Url.Action("ajaxcall","Movies")',  
             dataType: 'json',  
             data: {id: $("#theTextArea").val() },  
-            success: function (data) {  
+            success: function (data) {
+                if (!$.trim(data)) {
+                    $("#error2").show(200);
+                    return false;
+                }
+                   
+                $("#tblStudent").show(200);
                 var items = '';  
                 $.each(data, function (i, item) {  
                     var rows = "<tr>"  
-                        + "<td class='prtoducttd'>" + item.Name + "</td>"  
-                        + "<td class='prtoducttd'>" + item.Id + "</td>"  
-                        + "<td class='prtoducttd'>" + item.checkid + "</td>"  
+                        + "<td id='movieIdt'>" + item.movieId + "</td>"  
+                        + "<td id='Name' class='prtoducttd'>" + item.Name + "</td>"  
+                        + "<td><input id='" + item.movieId + "' type='checkbox'><label class='form-check-label text-danger' for='"+item.movieId+"'> Select</label></td>"
+                        
                         + "</tr>";  
-                    $('#tblStudent tbody').append(rows);  
+                    $('#tblStudent tbody').append(rows);
                 });  
             },  
             error: function (ex) {  
@@ -110,6 +128,41 @@
         
     }
 </script>
+
+
+
+<script>
+    var chkItems = new Array();
+
+    function ajaxadd() {
+        $("#tblStudent").each(function() {
+            var row = $(this);
+            if (row.find('input[type="checkbox"]').is(':checked')) {
+                console.log(1);
+                var mov = { Name: $("#Name").text(), movieId: $("#movieIdt").text() }
+                chkItems.push(mov);
+            }
+            console.log(mov.Name);
+        });
+    
+      
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("sumbitToDB","Movies")',
+        data: { Movie: chkItems },
+        dataType: 'json',
+        success: function (data) {
+            $("#tblStudent").hide(200);
+            $("#success").show(200);
+        },
+        error: function(e) {
+            alert(e.message);
+        }
+        });
+        }
+</script>
+
 
 
 
