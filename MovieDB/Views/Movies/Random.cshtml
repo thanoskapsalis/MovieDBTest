@@ -109,9 +109,9 @@
                 var items = '';  
                 $.each(data, function (i, item) {  
                     var rows = "<tr>"  
-                        + "<td id='movieIdt'>" + item.movieId + "</td>"  
+                        + "<td >" + item.movieId + "</td>"  
                         + "<td id='Name' class='prtoducttd'>" + item.Name + "</td>"  
-                        + "<td><input id='" + item.movieId + "' type='checkbox'><label class='form-check-label text-danger' for='"+item.movieId+"'> Select</label></td>"
+                        + "<td><input id='" + item.movieId + "' type='checkbox' data-id='"+item.movieId+"' data-name='"+item.Name+"'><label class='form-check-label text-danger' for='"+item.movieId+"'> Select</label></td>"
                         
                         + "</tr>";  
                     $('#tblStudent tbody').append(rows);
@@ -135,14 +135,13 @@
     var chkItems = new Array();
 
     function ajaxadd() {
-        $("#tblStudent").each(function() {
+        $("#tblStudent input[type='checkbox']").each(function() {
             var row = $(this);
-            if (row.find('input[type="checkbox"]').is(':checked')) {
-                console.log(1);
-                var mov = { Name: $("#Name").text(), movieId: $("#movieIdt").text() }
+            if (row.is(':checked')) {
+                var mov = { Name: row.attr("data-name"), movieId: row.data("id")}
                 chkItems.push(mov);
             }
-            console.log(mov.Name);
+            
         });
     
       
