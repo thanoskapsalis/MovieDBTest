@@ -3,65 +3,57 @@
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body >
+    <div class="main">
+        <body>
 
 
-<div class="container">
-    <div class="row">
-        <div class=" container float-left">
-            <h1>Insert your Movies</h1>
-        </div>
-    </div>
-    <div id="error" class="alert alert-warning">
-        <strong id="errormessage">Warning!</strong>You must write at least one movie to continue.
-    </div>
-    <div class="form-group">
-        <form method="post" class="form-group" onsubmit="return SubmitCheck()" action="@Url.Action("TestFunction", "Movies")">
-            <label class="control-label col-sm-2">Movie List:</label>
-            <div>
-                <textarea id="theTextArea" class="form-control" rows="5" cols="90" id="result" name="MovieName"></textarea><br />
-                <!--   <button type="submit" id="submit" for="search" class="btn btn-danger btn-block" onclick="SubmitCheck()">Search</button> -->
+            <div class="container">
+                <h1 class="motto">Insert your Movies</h1>
+                <div id="error" class="alert alert-warning">
+                    <strong id="errormessage">Warning!</strong>You must write at least one movie to continue.
+                </div>
+                <div class="card-body mx-4">
+                    <form method="post" class="form-group" onsubmit="return SubmitCheck()" action="@Url.Action("TestFunction", "Movies")">
+
+                        <div class="md-form">
+                            <textarea id="theTextArea"class="md-textarea form-control" rows="5" cols="90" id="result" name="MovieName" placeholder="Type your movie list here:"></textarea><br />
+                            <!--   <button type="submit" id="submit" for="search" class="btn btn-danger btn-block" onclick="SubmitCheck()">Search</button> -->
+
+                        </div>
+                    </form>
+                    <button type="button" onclick="LoadData();" id="ajax" class="btn btn-danger btn-block">Search</button> <br />
+
+
+                    <a class="btn btn-danger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How does this Work?</a>
+                    <br /><br /><div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            You just have to write one by one a movie title and press the Search Button.
+                            <strong>Attention!</strong>Every Line MUST have one movie.<br />If you want to add a second movie type in on the next line.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div id="ajaxResutls" class="container">
+                <div id="error2" class="alert alert-warning">
+                    <strong id="errormessage">Unfortunetly!</strong>Any movie match your searches.
+                </div>
+               
+                <div id="cards" class="row">
+
+                </div>
+                <button type="submit" id="submit2" onclick="ajaxadd()" class="btn btn-danger">Add Selected Items to Wishlist</button><br /><br />
+                <div id="success" class="alert alert-success" role="alert">
+                    <strong>Congrats!</strong> Movies Stored
+                </div>
 
             </div>
-        </form>
-      <button type="button" onclick="LoadData();" id="ajax" class="btn btn-danger btn-block">Search</button> <br />
-
-
-        <a class="btn btn-danger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">How does this Work?</a>
-        <br /><br /><div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                You just have to write one by one a movie title and press the Search Button.
-                <strong>Attention!</strong>Every Line MUST have one movie.<br />If you want to add a second movie type in on the next line.
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div id="ajaxResutls" class="container">
-    <div id="error2" class="alert alert-warning">
-        <strong id="errormessage">Unfortunetly!</strong>Any movie match your searches.
-    </div>
-    <div id="success" class="alert alert-success" role="alert">
-        <strong>Congrats!</strong> Movies Stored
-    </div>
-    <table id="tblStudent" class="table table-bordered table-striped table-responsive table-hover">
-        <thead>
-            <tr>
-                <th align="left">id</th>
-                <th align="left">Movie Name</th>
-                <th align="left"></th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <button type="submit2" id="submit" onclick="ajaxadd()" class="btn btn-danger">Add Selected Items to Wishlist</button><br /><br />
-
-
-</div>
+  
 </body>
-
+    </div>
 
 <script>
     jQuery(document).ready(function () {
@@ -69,6 +61,7 @@
         $("#error2").hide();
         $("#tblStudent").hide();
         $("#success").hide();
+        $("#submit2").hide();
     });
 
 </script>
@@ -106,15 +99,36 @@
                 }
                    
                 $("#tblStudent").show(200);
+                $("#submit2").show(200)
                 var items = '';  
-                $.each(data, function (i, item) {  
-                    var rows = "<tr>"  
-                        + "<td >" + item.movieId + "</td>"  
-                        + "<td id='Name' class='prtoducttd'>" + item.Name + "</td>"  
-                        + "<td><input id='" + item.movieId + "' type='checkbox' data-id='"+item.movieId+"' data-name='"+item.Name+"'><label class='form-check-label text-danger' for='"+item.movieId+"'> Select</label></td>"
-                        
-                        + "</tr>";  
-                    $('#tblStudent tbody').append(rows);
+                $.each(data, function (i, item) {
+                    var rows =
+                        "<div class='col-sm-4'>" +
+                            "<div class='card' style='width:18rem'>" +
+                        "<img class='img-thumbnail' src='https://image.tmdb.org/t/p/w500"+item.posterpath+"'/>" +
+                            "<div class='card-body'>" +
+                            "<h5 class='card-title'>" +
+                            item.Name +
+                            "</h5>" +
+                            "<p class='card-text'>" +
+                            item.overview +
+                            "</p>" +
+                            "<ul class='list-group list - group - flush'>" +
+                            "<li class='list-group-item'><strong>Released in: </strong>" +
+                            item.releasedate +
+                            "</li>" +
+                            "<li class='list-group-item'><input id='" +
+                            item.movieId +
+                            "' type='checkbox' data-id='" +
+                            item.movieId +
+                            "' data-name='" +
+                            item.Name +
+                            "'><label class='form-check-label text-danger' for='" +
+                            item.movieId +
+                            "'> Select</label></li>" +
+                            "</div>";     
+
+                    $('#cards').append(rows).show(200);
                 });  
             },  
             error: function (ex) {  
@@ -135,7 +149,7 @@
     var chkItems = new Array();
 
     function ajaxadd() {
-        $("#tblStudent input[type='checkbox']").each(function() {
+        $("#cards input[type='checkbox']").each(function() {
             var row = $(this);
             if (row.is(':checked')) {
                 var mov = { Name: row.attr("data-name"), movieId: row.data("id")}
@@ -148,7 +162,7 @@
 
     $.ajax({
         type: "POST",
-        url: '@Url.Action("sumbitToDB","Movies")',
+        url: '@Url.Action("SumbitToDB","Movies")',
         data: { Movie: chkItems },
         dataType: 'json',
         success: function (data) {
@@ -160,6 +174,7 @@
         }
         });
         }
+
 </script>
 
 

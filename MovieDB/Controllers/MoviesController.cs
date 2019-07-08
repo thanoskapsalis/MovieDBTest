@@ -84,7 +84,7 @@ namespace MovieDB.Controllers
 
 
                 var rootObject=JsonConvert.DeserializeObject<RootObject>(apiResponse);
-                foreach (var i in rootObject.results) searchMovies.Add(new Movie(i.id, i.title));
+                foreach (var i in rootObject.results) searchMovies.Add(new Movie(i.id, i.title, i.overview, i.poster_path,i.release_date));
 
                 return searchMovies;
             }
@@ -148,7 +148,7 @@ namespace MovieDB.Controllers
             return RedirectToAction("Items");
         }
 
-        public JsonResult sumbitToDB(List<Movie> Movie)
+        public JsonResult SumbitToDB(List<Movie> Movie)
         {
             for (int i=0; i < Movie.Count; i++)
             {

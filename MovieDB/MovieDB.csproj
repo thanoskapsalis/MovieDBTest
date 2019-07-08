@@ -145,6 +145,10 @@
     <Compile Include="Migrations\201907040724246_Name.Designer.cs">
       <DependentUpon>201907040724246_Name.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907080803303_Genre.cs" />
+    <Compile Include="Migrations\201907080803303_Genre.Designer.cs">
+      <DependentUpon>201907080803303_Genre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\MovieContext.cs" />
@@ -171,6 +175,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\image.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\Settings.settings">
@@ -178,6 +183,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\coming-sssoon-demo.css" />
+    <Content Include="Scripts\coming-sssoon.css" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -188,6 +195,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Movies\Images\image.png" />
+    <Content Include="Views\Shared\Images\image.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -235,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907040724246_Name.resx">
       <DependentUpon>201907040724246_Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907080803303_Genre.resx">
+      <DependentUpon>201907080803303_Genre.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
