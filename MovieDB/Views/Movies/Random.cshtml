@@ -36,12 +36,14 @@
             </div>
 
 
-
+           
             <div id="ajaxResutls" class="container">
                 <div id="error2" class="alert alert-warning">
                     <strong id="errormessage">Unfortunetly!</strong>Any movie match your searches.
                 </div>
-               
+                <div id="loading" class="spinner-border text-danger" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
                 <div id="cards" class="row">
 
                 </div>
@@ -62,6 +64,7 @@
         $("#tblStudent").hide();
         $("#success").hide();
         $("#submit2").hide();
+        $("#loading").hide();
     });
 
 </script>
@@ -81,10 +84,16 @@
 
 <script>
     function LoadData() {
+        $("#loading").show();
         if (SubmitCheck())
+        {
             $("#error").hide(200);
+            $("#loading").hide();
+        }
+        $("#loading").show();
         $("#error2").hide(200);
         $("#success").hide(200);
+        $("#cards").empty();
         var value = 
             $("#tblStudent tbody tr").remove();  
         $.ajax({  
@@ -97,9 +106,10 @@
                     $("#error2").show(200);
                     return false;
                 }
-                   
+                $("#loading").hide();  
                 $("#tblStudent").show(200);
                 $("#submit2").show(200)
+
                 var items = '';  
                 $.each(data, function (i, item) {
                     var rows =
